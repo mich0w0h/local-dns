@@ -1,0 +1,22 @@
+services:
+  resolver:
+    build: ./resolver
+    ports:
+      - "53:53/udp"
+    networks:
+      internal-dns:
+        ipv4_address: 192.168.1.101
+  authoritative:
+    image: coredns/coredns
+    volumes:
+      - "./authoritative:/etc/coredns"
+    networks:
+      internal-dns:
+        ipv4_address: 192.168.1.102
+    command: -conf /etc/coredns/Corefile
+networks:
+  internal-dns:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24
