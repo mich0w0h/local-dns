@@ -2,9 +2,12 @@
 
 This repository contains the necessary configuration to set up a local DNS server using Docker which offers name resolution of a local-only-domain `mich0w0h.house`. The server is composed of two services: a resolver and an authoritative DNS server.
 
+For more detailed instructions on setup, please refer to this post: https://dev.to/mich0w0h/setting-up-a-local-dns-service-with-docker-on-ubuntu-2204-290i
+
 ## Services
 
 the networking overview is here;
+
 ```mermaid
 graph LR
   subgraph Docker
@@ -18,7 +21,6 @@ graph LR
   resolver -->|dns request| authoritative
   authoritative -->|dns response| resolver
 ```
-
 
 ### Resolver
 
@@ -64,4 +66,3 @@ And create a new `/etc/resolv.conf` with a nameserver of your choice. For exampl
 ```bash
 echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf
 ```
-
