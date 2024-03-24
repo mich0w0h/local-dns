@@ -4,6 +4,22 @@ This repository contains the necessary configuration to set up a local DNS serve
 
 ## Services
 
+the networking overview is here;
+```mermaid
+graph LR
+  subgraph Docker
+    subgraph "local-dns Network (192.168.1.0/24)"
+      resolver[resolver: 192.168.1.101]
+      authoritative[authoritative: 192.168.1.102]
+    end
+  end
+  HostMachine[Host Machine]
+  HostMachine -->|53/udp| resolver
+  resolver -->|dns request| authoritative
+  authoritative -->|dns response| resolver
+```
+
+
 ### Resolver
 
 The resolver service is built from a Dockerfile located in the `resolver` directory. It uses Ubuntu 22.04 as a base image and installs Unbound, a lightweight DNS resolver. The configuration for Unbound is copied from `resolver/unbound.conf` into the container.
